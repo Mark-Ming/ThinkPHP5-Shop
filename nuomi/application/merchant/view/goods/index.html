@@ -1,0 +1,66 @@
+{include file='public/header'}
+
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品管理 <span class="c-gray en">&gt;</span> 商品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="mt-20">
+
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:;" onclick="content_add('添加商品', '{:url('goods/add')}')" class="btn btn-primary radius">
+                     <i class="Hui-iconfont">&#xe600;</i> 添加商品
+                </a>
+            </span>
+        </div>
+
+        <div class="mt-20">
+
+            <table class="table table-border table-bordered table-hover table-bg table-sort">
+                <thead>
+                <tr class="text-c">
+                    <th width="25">ID</th>
+                    <th width="60">商品名称</th>
+                    <th width="80">所属店铺</th>
+                    <th width="80">图片</th>
+                    <th width="60">原价</th>
+                    <th width="60">现价</th>
+                    <th width="90">开始时间</th>
+                    <th width="130">结束时间</th>
+                    <th width="50">剩余个数</th>
+                    <th width="130">添加时间</th>
+                    <th width="130">更新时间</th>
+                    <th width="40">状态</th>
+                    <th width="60">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name='data' id='c'}
+                <tr class="text-c">
+                    <td>{$c.id}</td>
+                    <td>{$c.name}</td>
+                    <td>{:getNameByShopID($c.shop_id)}</td>
+                    <td><div class="person_img"><img src="{$c.image_url}" alt=""></div></td>
+                    <td>¥{$c.old_price}</td>
+                    <td>¥{$c.new_price}</td>
+                    <td>{$c.start_time}</td>
+                    <td>{$c.end_time}</td>
+                    <td>{$c.count}</td>
+                    <td>{$c.create_time}</td>
+                    <td>{$c.update_time}</td>
+                    <td class="td-status">{:status($c.status)}</td>
+                    <td class="td-manage">
+                        {if $c.status == 0}
+                        <a style="text-decoration:none; font-size: 20px;" onclick="content_handle('确认要上架该商品吗?', '{:url('goods/status', ['id'=>$c.id, 'status'=>-1])}')" href="javascript:;" title="上架"><i class="Hui-iconfont">&#xe615;</i></a>
+                        {else /}
+                        <a title="下架" href="javascript:;" onclick="content_handle('确认下架该商品吗?','{:url('goods/status', ['id'=>$c.id, 'status'=>0])}')" class="ml-5" style="text-decoration:none; font-size: 20px;"><i class="Hui-iconfont">&#xe60b;</i></a>
+                        {/if}
+                        <a style="text-decoration:none; font-size: 20px;" onclick="content_add('编辑商品', '{:url('goods/edit', ['id'=>$c.id])}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {include file='public/footer'}

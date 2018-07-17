@@ -1,0 +1,62 @@
+{include file='public/header'}
+
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 店铺管理 <span class="c-gray en">&gt;</span> 店铺列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="mt-20">
+
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:;" onclick="content_add('添加店铺', '{:url('shop/add')}')" class="btn btn-primary radius">
+                     <i class="Hui-iconfont">&#xe600;</i> 添加店铺
+                </a>
+            </span>
+        </div>
+
+        <div class="mt-20">
+
+        <table class="table table-border table-bordered table-hover table-bg table-sort">
+            <thead>
+            <tr class="text-c">
+                <th width="25">ID</th>
+                <th width="60">店铺名称</th>
+                <th width="80">所属分类</th>
+                <th width="80">logo</th>
+                <th width="120">地址</th>
+                <th width="85">电话号码</th>
+                <th width="120">营业时间</th>
+                <th width="130">简介</th>
+                <th width="130">添加时间</th>
+                <th width="40">状态</th>
+                <th width="50">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name='data' id='c'}
+            <tr class="text-c">
+                <td>{$c.id}</td>
+                <td><a href="{:url('category/subcategory', ['id'=>$c.id])}">{$c.name}</a></td>
+                <td>{:getNameByCategoryID($c.category_id)}</td>
+                <td><div class="person_img"><img src="{$c.logo}" alt=""></div></td>
+                <td>{$c.address}</td>
+                <td>{$c.telphone}</td>
+                <td>{$c.open_time}</td>
+                <td>{:html_entity_decode($c.content)}</td>
+                <td>{$c.create_time}</td>
+                <td class="td-status">{:status($c.status)}</td>
+                <td class="td-manage">
+                    {if $c.status == 0}
+                    <a style="text-decoration:none; font-size: 20px;" onclick="content_handle('确认要启用该店铺吗?', '{:url('shop/status', ['id'=>$c.id, 'status'=>-1])}')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a>
+                    {else /}
+                    <a title="删除" href="javascript:;" onclick="content_handle('确认关闭该店铺吗?','{:url('shop/status', ['id'=>$c.id, 'status'=>0])}')" class="ml-5" style="text-decoration:none; font-size: 20px;"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                    {/if}
+                    <a style="text-decoration:none; font-size: 20px;" onclick="content_add('编辑店铺', '{:url('shop/edit', ['id'=>$c.id])}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{include file='public/footer'}

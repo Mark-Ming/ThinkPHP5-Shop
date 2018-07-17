@@ -1,0 +1,225 @@
+{include file='public/header'}
+
+<body>
+<article class="page-container" style="width: 80%;">
+    <form action="{:url('shop/save')}" method="post" class="form form-horizontal" id="form-member-add">
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">店铺名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入店铺名" id="name" name="name">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">所属分类：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+				    <select class="select childSelect" size="1" name="category_id[]">
+				    	<option value="-1" selected>选择分类</option>
+                        {volist name='categories' id='cate'}
+				    	<option value="{$cate.id}">{$cate.name}</option>
+                        {/volist}
+				    </select>
+                     <select class="select childSelect" size="1" name="category_id[]">
+
+				    </select>
+                     <select class="select childSelect" size="1" name="category_id[]">
+
+				    </select>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">电话号码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入店铺电话" id="telphone" name="telphone">
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">LOGO：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <!--用来存放item-->
+                <!--<div id="fileList" class="uploader-list"></div>-->
+                <div class="file-item"><img src="" id="logo_photo_preview" style="width: 200px;"></div>
+
+                <div class="filePicker" onclick="addWebUploadImage('logo')">选择图片</div>
+                <input type="hidden" name="logo" id="logo">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">营业执照：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <!--用来存放item-->
+                <!--<div id="fileList" class="uploader-list"></div>-->
+                <div class="file-item"><img src="" id="license_photo_preview" style="width: 200px;"></div>
+                <div class="filePicker" onclick="addWebUploadImage('license')">选择图片</div>
+                <input type="hidden" name="license" id="license">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">所在城市：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width: 200px;">
+				    <select class="select proSelect" size="1" name="province">
+				    	<option value="-1" selected>请选择省份</option>
+                        {volist name='provinceData' id='pro'}
+				    	<option value="{$pro.id}">{$pro.name}</option>
+                        {/volist}
+				    </select>
+				</span>
+
+                <span class="select-box" style="width: 200px">
+                    <select class="select citySelect" size="1" name="city">
+
+				    </select>
+                </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">详细地址：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入详细地址" id="address" name="address">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">营业时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请选择营业开始时间" id="open_time" name="open_time">
+
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">店铺介绍：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <script id="container" name="content" type="text/plain">
+                </script>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/back/hui/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/back/hui/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/back/hui/static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/back/hui/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/webuploader/0.1.5/webuploader.js"></script>
+<script type="text/javascript" src="/static/back/js/imageUpload.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/ueditor/1.4.3/ueditor.all.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/laydate/laydate.js"></script>
+
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue = UE.getEditor('container');
+</script>
+
+<!--时间选择器-->
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#open_time', //指定元素
+        type: 'time',
+        range: true
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-member-add").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 16
+                },
+                telphone: {
+                    required: true,
+                    isMobile: true,
+                },
+                uploadfile: {
+                    required: true,
+                },
+                address: {
+                    required: true,
+                },
+                open_time: {
+                    required: true,
+                },
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                //事件提交
+                // $('#form-member-add').submit();
+                form.submit();
+            }
+        });
+    });
+
+
+    //点击省份获取二级城市的事件
+    $('.proSelect').change(function () {
+        var data = {
+            id: $(this).val()
+        };
+        var url = "{:url('regist/getCitiesByID')}";
+        $.post(url, data, function (res) {
+
+            var str = '';
+
+            $(res).each(function () {
+                str += '<option value="' + this.id + '" selected>' + this.name + '</option>';
+            });
+            $('.citySelect').html(str);
+
+        }, 'JSON');
+    });
+
+    //获取下一级分类事件
+    $('.childSelect').change(function () {
+        var data = {
+            id : $(this).val()
+        };
+        var next = $(this).next();
+        next.next().html('');//选择一级分类时清空第三级分类
+        var url = "{:url('shop/subcategory')}";
+        $.post(url, data, function (res) {
+            var str = '<option value="-1" selected>选择分类</option>';
+            $(res).each(function () {
+                str += '<option value="' + this.id + '">' + this.name + '</option>';
+            });
+            next.html(str);
+        }, 'JSON');
+    });
+
+</script>
+</body>
+</html>

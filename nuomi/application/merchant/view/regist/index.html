@@ -1,0 +1,198 @@
+{include file='public/header'}
+
+<body>
+<div class="topTitle">商户注册平台</div>
+<article class="page-container" style="width: 50%;margin-left: 270px;">
+    <form action="{:url('regist/save')}" method="post" class="form form-horizontal" id="form-member-add">
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">用户名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入用户名" id="username" name="username">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">密码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="password" class="input-text" value="" placeholder="请输入密码" id="password" name="password">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">确认密码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="password" class="input-text" value="" placeholder="请输入确认密码" id="confirm" name="confirm">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">性别：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="gender" type="radio" id="sex-1" checked value="M">
+                    <label for="sex-1">男</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" name="gender" value="F">
+                    <label for="sex-2">女</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">手机：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入手机号" id="phone" name="phone">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">邮箱：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="@" name="email" id="email">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">银行卡号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="请输入银行卡号" name="bank_card" id="bank_card">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">身份证号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" placeholder="请输入身份证号" name="person_id" id="person_id">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">身份证照片：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                    <!--用来存放item-->
+                    <div id="fileList" class="uploader-list"></div>
+                    <div id="filePicker">选择图片</div>
+                    <input type="hidden" name="person_img" id="person_img">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">所在城市：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width: 200px;">
+				    <select class="select proSelect" size="1" name="province">
+				    	<option value="" selected>请选择省份</option>
+                        {volist name='provinceData' id='pro'}
+				    	<option value="{$pro.id}">{$pro.name}</option>
+                        {/volist}
+				    </select>
+				</span>
+
+                <span class="select-box" style="width: 200px">
+                    <select class="select citySelect" size="1" name="city">
+
+				    </select>
+                </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/back/hui/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/back/hui/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/back/hui/static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/back/hui/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/webuploader/0.1.5/webuploader.js"></script>
+<script type="text/javascript" src="/static/back/js/imageUpload.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-member-add").validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 16
+                },
+                password: {
+                    required: true
+                },
+                confirm: {
+                    required: true
+                },
+                person_id: {
+                    required: true
+                },
+                bank_card: {
+                    required: true
+                },
+                gender: {
+                    required: true,
+                },
+                phone: {
+                    required: true,
+                    isMobile: true,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                uploadfile: {
+                    required: true,
+                },
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                //事件提交
+                form.submit();
+            }
+        });
+    });
+
+
+    //点击省份获取二级城市的事件
+    $('.proSelect').change(function () {
+        var data = {
+            id: $(this).val()
+        };
+
+        var url = "{:url('regist/getCitiesByID')}";
+
+        $.post(url, data, function (res) {
+            var str = '<option value="" selected>请选择城市</option>';
+
+            $(res).each(function () {
+                str += '<option value="' + this.id + '" selected>' + this.name + '</option>';
+            });
+
+            $('.citySelect').html(str);
+        }, 'JSON');
+    });
+
+</script>
+</body>
+</html>

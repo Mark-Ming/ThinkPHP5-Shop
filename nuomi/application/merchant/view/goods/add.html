@@ -1,0 +1,214 @@
+{include file='public/header'}
+
+<body>
+<article class="page-container" style="width: 80%;">
+    <form action="{:url('goods/add')}" method="post" class="form form-horizontal" id="form-member-add">
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">商品名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入店铺名" id="name" name="name">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">所属店铺：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <select class="select childSelect" size="1" name="shop_id">
+                    <option value="-1" selected>选择店铺</option>
+                    {volist name='shops' id='s'}
+                    <option value="{$s.id}">{$s.name}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">原价：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入原价" id="old_price" name="old_price">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">现价：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入现价" id="new_price" name="new_price">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">库存：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入库存" id="count" name="count">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">开始时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请选择活动开始时间" id="start_time" name="start_time">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">结束时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请选择活动结束时间" id="end_time" name="end_time">
+            </div>
+        </div>
+
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">缩略图：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <!--用来存放item-->
+                <!--<div id="fileList" class="uploader-list"></div>-->
+                <div class="file-item"><img src="" id="logo_photo_preview" style="width: 200px;"></div>
+
+                <div class="filePicker" onclick="addWebUploadImage('logo')">选择图片</div>
+                <input type="hidden" name="image_url" id="logo">
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">商品介绍：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <script id="good_desc" name="good_desc" type="text/plain">
+                </script>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">购买须知：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <script id="notice" name="notice" type="text/plain">
+                </script>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/back/hui/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/back/hui/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/back/hui/static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/back/hui/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/webuploader/0.1.5/webuploader.js"></script>
+<script type="text/javascript" src="/static/back/js/imageUpload.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/ueditor/1.4.3/ueditor.all.js"></script>
+<script type="text/javascript" src="/static/back/hui/lib/laydate/laydate.js"></script>
+
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue = UE.getEditor('good_desc');
+    var ue2 = UE.getEditor('notice');
+</script>
+
+<!--时间选择器-->
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#start_time', //指定元素
+        type: 'date'
+    });
+    laydate.render({
+        elem: '#end_time', //指定元素
+        type: 'date'
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-member-add").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 16
+                },
+                telphone: {
+                    required: true,
+                    isMobile: true,
+                },
+                uploadfile: {
+                    required: true,
+                },
+                address: {
+                    required: true,
+                },
+                open_time: {
+                    required: true,
+                },
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                //事件提交
+                form.submit();
+            }
+        });
+    });
+
+
+    //点击省份获取二级城市的事件
+    $('.proSelect').change(function () {
+        var data = {
+            id: $(this).val()
+        };
+        var url = "{:url('regist/getCitiesByID')}";
+        $.post(url, data, function (res) {
+
+            var str = '';
+
+            $(res).each(function () {
+                str += '<option value="' + this.id + '" selected>' + this.name + '</option>';
+            });
+            $('.citySelect').html(str);
+
+        }, 'JSON');
+    });
+
+    //获取下一级分类事件
+    $('.childSelect').change(function () {
+        var data = {
+            id : $(this).val()
+        };
+        var next = $(this).next();
+        next.next().html('');//选择一级分类时清空第三级分类
+        var url = "{:url('shop/subcategory')}";
+        $.post(url, data, function (res) {
+            var str = '<option value="-1">选择分类</option>';
+            $(res).each(function () {
+                str += '<option value="' + this.id + '" selected>' + this.name + '</option>';
+            });
+            next.html(str);
+        }, 'JSON');
+    });
+
+</script>
+</body>
+</html>

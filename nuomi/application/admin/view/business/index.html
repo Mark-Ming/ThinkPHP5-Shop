@@ -1,0 +1,55 @@
+{include file='public/header'}
+
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商户管理 <span class="c-gray en">&gt;</span> 商户列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-hover table-bg table-sort">
+            <thead>
+            <tr class="text-c">
+                <th width="30">ID</th>
+                <th width="60">商户姓名</th>
+                <th width="20">性别</th>
+                <th width="100">手机号码</th>
+                <th width="90">邮箱</th>
+                <th width="130">身份证号</th>
+                <th width="100">照片</th>
+                <th width="100">银行卡号</th>
+                <th width="100">地址</th>
+                <th width="140">添加时间</th>
+                <th width="70">状态</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name='data' id='user'}
+            <tr class="text-c">
+                <td>{$user.id}</td>
+                <td><u style="cursor:pointer" class="text-primary">{$user.username}</u></td>
+                <td>{:getGender($user.gender)}</td>
+                <td>{$user.phone}</td>
+                <td>{$user.email}</td>
+                <td>{$user.person_id}</td>
+                <td> <div class="person_img"><img src="/{$user.person_img}" alt=""></div></td>
+                <td>{$user.bank_card}</td>
+                <td>{:getAddress($user.address)}</td>
+                <td>{$user.create_time}</td>
+                <td class="td-status">{:status($user.status)}</td>
+                <td class="td-manage">
+                    {if $user.status != 1}
+                    <a style="text-decoration:none; font-size: 20px;" onclick="content_handle('确认要启用该商户吗?', '{:url('business/status', ['id'=>$user.id, 'status'=>1])}')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a>
+                    {else /}
+                    <a style="text-decoration:none; font-size: 20px;" onclick="content_handle('确认停用该商户吗?', '{:url('business/status', ['id'=>$user.id, 'status'=>-1])}')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
+                    <a title="删除" href="javascript:;" onclick="content_handle('确认删除吗?','{:url('business/status', ['id'=>$user.id, 'status'=>0])}')" class="ml-5" style="text-decoration:none; font-size: 20px;"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                    {/if}
+
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{include file='public/footer'}

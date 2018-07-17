@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BaiduKing</title>
+    <link rel="stylesheet" href="/static/front/css/login.css">
+    <script src="/static/front/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header-main">
+            <div class="logo-area">
+                <img src="/static/front/images/logo-baiduking.png" alt="">
+            </div>
+            <div class="login-text">
+                登录
+            </div>
+            <div class="register-area">
+                <span>还没有百度糯米账号</span>
+                <a href="{:url('regist/index')}">注册</a>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    <div class="middle">
+        <div class="middle-main">
+            <div class="login-logo">
+
+            </div>
+            <div class="login-area">
+                <div class="title">登录BaiduKing</div>
+                <div class="form-area">
+                    <p class="pass-item login-type-2">
+                        <input class="pass-text-input userNameInput phoneNumberInput" type="text" placeholder="手机号" id="phoneNumber">
+                        <label class="pass-label-phone" for="phoneNumber"></label>
+                    </p>
+                    <p class="pass-code login-type-2">
+                        <input class="dynamic-code" type="text" placeholder="动态密码">
+                        <button class="send-code-btn">发送动态密码</button>
+                    </p>
+                    <p class="pass-sms-p login-type-1">
+                        <a class="pass-sms-btn" id="pass-sms-btn" href="javscript:;">短信快捷登录</a>
+                    </p>
+                    <p class="pass-item login-type-1">
+                        <input class="pass-text-input userNameInput" type="text" placeholder="手机/邮箱/用户名/糯米帐号" id="userName">
+                        <label class="pass-label-userName" for="userName"></label>
+                        <span class="username-alert" style="display: none;"></span>
+                    </p>
+                    <p class="pass-item login-type-1">
+                        <input class="pass-text-input passwordInput" type="password" placeholder="密码" id="password">
+                        <label class="pass-label-password" for="password"></label>
+                        <span class="password-alert" style="display: none;"></span>
+                    </p>
+                    <p class="pass-remember login-type-1">
+                        <input type="checkbox" id="remember-checkbox">
+                        <label for="remember-checkbox">下次自动登录</label>
+                    </p>
+                    <p class="pass-login">
+                        <input class="pass-login-submit" type="button" value="登录">
+                    </p>
+                    <p class="pass-agreement login-type-2">
+                        <span>阅读并接受<a href="#">《用户协议》</a></span>
+                        <a class="link-back" id="link-back" href="javscript:;">账号密码登录</a>
+                    </p>
+                </div>
+                <div class="other-login-type">
+                    <a class="qq" href="#"></a>
+                    <a class="weibo" href="#"></a>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-main">
+            <div class="links">
+                <a href="#">关于BaiduKing</a>
+                <span>|</span>
+                <a href="#">常见问题</a>
+                <span>|</span>
+                <a href="#">违规投诉</a>
+                <span>|</span>
+                <a href="#">开放平台</a>
+                <span>|</span>
+                <a href="#">用户协议</a>
+                <span>|</span>
+                客服电话:
+                <span class="phone-number">400-8888-888</span>
+                (每天9:00 - 22:00)
+            </div>
+            <div class="site-info">
+                <span class="copyright">©</span>
+                2015&nbsp; YuanWen.Tech &nbsp;
+                <a href="#">京ICP证888888号</a>
+                京公网安备1234567891011号
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let sms_btn = document.getElementById('pass-sms-btn');
+    let link_back = document.getElementById('link-back');
+    let type1_items = document.getElementsByClassName('login-type-1');
+    let type2_items = document.getElementsByClassName('login-type-2');
+    sms_btn.onclick = function () {
+        for (let i = 0; i < type1_items.length; i++)
+        {
+            type1_items[i].style.display = 'none';
+        }
+        for (let i = 0; i < type2_items.length; i++)
+        {
+            type2_items[i].style.display = 'block';
+        }
+    };
+    link_back.onclick = function () {
+        for (let i = 0; i < type1_items.length; i++)
+        {
+            type1_items[i].style.display = 'block';
+        }
+        for (let i = 0; i < type2_items.length; i++)
+        {
+            type2_items[i].style.display = 'none';
+        }
+    };
+</script>
+
+<script>
+    //登录按钮的点击事件:
+    $('.pass-login-submit').click(function () {
+        //验证用户名和密码
+        var username = $('#userName').val();
+        var password = $('#password').val();
+        if ($.trim(username) === ''){
+            $('.username-alert').html('用户名不能为空').show().css({
+                color : 'red'
+            });
+            return;
+        }
+        else {
+            $('.username-alert').hide();
+        }
+        if ($.trim(password) === ''){
+            $('.password-alert').html('密码不能为空').show().css({
+                color : 'red'
+            });
+            return;
+        }
+        else {
+            $('.password-alert').hide();
+        }
+
+        var data = {
+            username : username,
+            password : password
+        };
+
+        var url = "{:url('index/login/login')}";
+
+        $.post(url, data, function (result) {
+            console.log(result);
+            if (result.status == -1)
+            {
+                $('.username-alert').html(result.message).show().css({
+                    color : 'red'
+                });
+            }
+            else if(result.status == 0){
+                $('.password-alert').html(result.message).show().css({
+                    color : 'red'
+                });
+            }
+            else if(result.status == 1){
+                //登录成功
+                window.location.href = "{:url('index/index')}";
+            }
+        }, 'JSON');
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度糯米</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
+    <link rel="stylesheet" href="/static/front/css/common.css">
+</head>
+<body>
+<!--Header-->
+<div class="header">
+    <!--顶部导航条-->
+    <div class="navigation">
+        {if !$username}
+        <ul class="left-navigation">
+            <li>Hi，欢迎来到百度糯米</li>
+            <li class="login"><a href="{:url('index/login/index')}">请登录</a></li>
+            <li class="register"><a href="{:url('index/regist/index')}">免费注册</a></li>
+        </ul>
+        {else /}
+        <ul class="left-navigation">
+            <li>Hi, {$username}</li>
+            <li class="register"><a href="{:url('index/login/logout')}">退出</a></li>
+        </ul>
+        {/if}
+
+
+        <ul class="right-navigation">
+            <li><a href="">食品安全</a></li>
+            <li><a href="">帮助中心</a></li>
+            <li class="sep-line">|</li>
+            <li><a href="">我是商家 <span class="arrow-down"></span></a><span class="nav-white-arrow">
+                </span>
+                <div class="hideView merchant">
+                    <a href="#">商户中心</a>
+                    <a href="#">我想合作</a>
+                </div>
+            </li>
+            <li><a href="">糯米APP <span class="arrow-down"></span> <span class="nav-white-arrow"></span></a>
+                <div class="hideView nuomi-app">
+                    <a href="#">
+                        <img src="/static/front/images/qr-code.png" alt="">
+                    </a>
+                </div>
+            </li>
+            <li class="sep-line">|</li>
+            <li><a href="#">最近浏览 <span class="arrow-down"></span> <span class="nav-white-arrow"></span></a>
+                <div class="hideView recently-viewed">
+                    <a class="recently-viewed-item" href="#">
+                        <img src="/static/front/images/yule01.jpg" alt="">
+                        <span class="recently-viewed-item-title">丽水金沙温泉水会</span>
+                        <span class="recently-viewed-item-price">人均￥139.5</span>
+                        <span class="recently-viewed-item-position">三八广场</span>
+                    </a>
+                    <a class="recently-viewed-item" href="#">
+                        <img src="/static/front/images/yule05.jpg" alt="">
+                        <span class="recently-viewed-item-title">大连森林动物园</span>
+                        <span class="recently-viewed-item-price">人均￥3839</span>
+                        <span class="recently-viewed-item-position">付家庄</span>
+                    </a>
+                    <a class="recently-viewed-item" href="#">
+                        <img src="/static/front/images/yule02.jpg" alt="">
+                        <span class="recently-viewed-item-title">和谐号海鲜烤肉火锅</span>
+                        <span class="recently-viewed-item-price">人均￥62.5</span>
+                        <span class="recently-viewed-item-position">华南广场</span>
+                    </a>
+                    <a class="clear-record" href="#">清空浏览记录</a>
+                </div>
+            </li>
+            <li><a href="">个人中心</a></li>
+        </ul>
+    </div>
+    <!--位置、搜索、退、赔、菜单列表集合-->
+    <div class="top-area">
+        <!--logo、位置信息、搜索区域、退、赔-->
+        <div class="search">
+            <!--logo-->
+            <img class="logoImage" src="/static/front/images/logo-baiduking.png">
+            <!--城市信息-->
+            <div class="city">
+                <img class="position" src="/static/front/images/position.png">
+                <span class="position-name">{$defaultCity.name}</span>
+                <img class="pos-arrow-down" src="/static/front/images/arrow-down.png" alt="">
+                <span class="pos-white-arrow"></span>
+                <div class="hideView pos-city-list">
+                    <h3>热门城市</h3>
+                    <ul>
+                        {volist name='cities' id='c'}
+                        <li><a href="#">{$c.name}</a></li>
+                        {/volist}
+                    </ul>
+                    <a class="more-city" href="#">更多城市></a>
+                </div>
+            </div>
+            <!--搜索区域-->
+            <form class="search-form" action="#">
+                <input class="search-area" type="text" placeholder="搜索商家/地点"><input class="search-button" type="submit" value="搜 索">
+            </form>
+            <!--推荐选项区域-->
+            <ul class="recommend-area">
+                <li><a href="#">推拿按摩</a></li>
+                <li><a href="#">书店</a></li>
+                <li><a href="#">婚宴</a></li>
+                <li><a href="#">钢琴</a></li>
+                <li><a href="#">ktv</a></li>
+            </ul>
+            <!--退、赔-->
+            <div class="option">
+                <a href="#">
+                    <div class="retreat">
+                        <img src="/static/front/images/retreat.png" alt="">
+                        <span class="option-arrow-down"></span>
+                        <div class="hideView retreat-view option-text">未消费，随便退！</div>
+                    </div>
+                    <div class="compensate">
+                        <img src="/static/front/images/compensate.png" alt="">
+                        <span class="option-arrow-down"></span>
+                        <div class="hideView compensate-view option-text">消费不满意先行赔付！</div>
+                    </div>
+                    <div class="rmb">
+                        <img src="/static/front/images/rmb.png" alt="">
+                        <span class="option-arrow-down"></span>
+                        <div class="hideView rmb-view option-text">过期自动退</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--菜单列表-->
+        <div class="menu">
+            <!--水平菜单-->
+            <ul class="menu-row-ul">
+                <li class="all-category">
+                    <span class="all-category-text">全部分类</span>
+                    <img class="all-category-img" src="/static/front/images/menu-icon.png">
+                    <!--垂直菜单-->
+                    <ul class="vertical-menu-area">
+
+                        {volist name='data' id='vo' key='index'}
+                        <li>
+                            <a class="menu-title">{$vo.title}</a>
+                            <div class="category-list" style="top:{:intval($index - 1) * -48}px;">
+                                {volist name='vo.se_category' id='se_vo'}
+                                    {$se_vo.se_title}
+                                    {volist name='se_vo.third_category' id='th_vo'}
+                                       <span>{$th_vo.th_title}</span>
+                                    {/volist}
+                                {/volist}
+                            </div>
+                        </li>
+                        {/volist}
+
+                    </ul>
+                </li>
+                <li><a href="#">首页</a></li>
+                <li><a href="#">酒店</a></li>
+                <li class="travel-li">
+                    <a href="#">出行</a>
+                    <span class="arrow-down"></span>
+                    <span class="travel-white-arrow"></span>
+                    <div class="hideView travel-view">
+                        <a href="#">机票</a>
+                        <a href="#">火车票</a>
+                        <a href="#">汽车票</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">电影</a>
+                    <img class="hot-film-img" src="/static/front/images/hot-film.png" alt="">
+                </li>
+                <li><a href="#">结婚</a></li>
+                <li><a href="#">外卖</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
